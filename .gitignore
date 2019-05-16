@@ -1,0 +1,5 @@
+# ignore backup file
+*~
+.vscode/
+testcode/
+
