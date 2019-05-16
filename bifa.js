@@ -1,7 +1,3 @@
-// BookInfoFromAmazon.js
-// Ver.1.0
-//Time-stamp: "2019-05-14 20:27:04 nor"
-//	copyright (c) 2012-2015 YAMAGISHI Norimasa (nor@rally.or.jp)
 javascript:(function(){
     var additionalString = "# 購入<br># 図書館<br># 読みたい<br># 読んだ<br>";
     var titleElm = document.getElementById('productTitle');
@@ -13,7 +9,15 @@ javascript:(function(){
 
     var authors = document.getElementsByClassName("author");
     var author = "";
-    for (i=0; i < authors.length ;i++) {
+    for (var i = 0; i < authors.length ;i++) {
+	let si = authors[i].getElementsByTagName("script");
+	while (si.length > 0) {
+	    si[0].parentNode.removeChild(si[0]);
+	}
+	si = authors[i].getElementsByClassName("a-popover-preload");
+	while (si.length > 0) {
+	    si[0].parentNode.removeChild(si[0]);
+	}
 	author += authors[i].innerText;
     }
 
@@ -22,7 +26,9 @@ javascript:(function(){
     var info = [];
     for (i=0; i < infos.length ;i++) {
 	let j = infos[i].innerText;
-	if (/(ページ|出版社|言語|ISBN|ASIN|発売日)/.test(j)) {
+	if (/ページ$/.test(j)) {
+	    info.push(infos[i].innerText.replace(/<br>/, "\n"));
+	} else if (/^(出版社|言語|ISBN|ASIN|発売日)/.test(j)) {
 	    info.push(infos[i].innerText.replace(/<br>/, "\n"));
 	}
     }
